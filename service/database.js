@@ -17,3 +17,7 @@ const users = db.collection('users');
     process.exit(1);
   }
 })();
+
+async function addUser(user){
+  await users.insertOne(user);
+}

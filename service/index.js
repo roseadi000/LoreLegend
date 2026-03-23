@@ -250,7 +250,8 @@ async function registerUser(email, password, username) {
         token: uuid.v4(),
     };
 
-    users.push(newUser);
+    await DB.addUser(user);
+    //users.push(newUser);
     return newUser;
 }
 
