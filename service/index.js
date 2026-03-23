@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const express = require('express');
 const uuid = require('uuid');
 const multer = require('multer');
+const DB = require('./database.js');
 
 const app = express();
 
