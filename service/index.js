@@ -41,11 +41,15 @@ apiRouter.post('/auth/create', async (req, res) => {
 //login user
 apiRouter.post('/auth/login', async (req, res) => {
     const user = await findUser('email', req.body.email);
+    console.log(user);
     if (user) {
         if (await bcrypt.compare(req.body.password, user.password)) {
             user.token = uuid.v4();
+            await DB.updateToken(user);
+
             setAuthCookie(res, user.token);
             res.send({ currentUser: user.username });
+            console.log('Logged in');
             return;
         }
     }

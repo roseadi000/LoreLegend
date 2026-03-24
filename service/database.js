@@ -23,10 +23,17 @@ async function addUser(user){
   await users.insertOne(user);
 }
 function getUser(field, value){
-  return users.findOne({[field]: value});
+  return users.findOne({ [field]: value });
 }
+async function updateToken(user){
+  await users.updateOne({ email: user.email }, {$set: {token: user.token}})
+}
+
+//Projects
+
 
 module.exports = {
   getUser,
   addUser,
+  updateToken,
 };
