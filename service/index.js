@@ -286,6 +286,7 @@ async function createProject(name, user) {
     };
 
     projects.push(newProject);
+    DB.addProject(user);
     return newProject;
 }
 
@@ -308,6 +309,7 @@ async function createCharacter(name, project, user) {
     };
 
     characters.push(newCharacter);
+    DB.addCharacter(user, project.name, newCharacter);
     return newCharacter;
 }
 

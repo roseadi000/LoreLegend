@@ -26,18 +26,27 @@ function getUser(field, value){
   return users.findOne({ [field]: value });
 }
 async function updateToken(user){
-  await users.updateOne({ email: user.email }, {$set: {token: user.token}})
+  await users.updateOne({ email: user.email }, {$set: {token: user.token}});
 }
 async function deleteToken(user){
-  await users.updateOne({ username: user.username }, { $unset: { token: 1 } })
+  await users.updateOne({ username: user.username }, { $unset: { token: 1 } });
 }
 
 //Projects
+async function addProject(user){
+  await users.updateOne({ username: user.username }, { $set: { projects: user.projects } });
+}
 
+//Characters
+async function addCharacter(user, project, character){
+  await users.updateOne( {username: user.username, 'projects.name': project}, { $push: { 'projects.$.characters': character } });
+}
 
 module.exports = {
   getUser,
   addUser,
   updateToken,
   deleteToken,
+  addProject,
+  addCharacter,
 };
