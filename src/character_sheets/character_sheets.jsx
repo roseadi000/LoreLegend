@@ -71,8 +71,7 @@ export function Character_Sheets() {
 
         const data = await response.json();
         if (response.ok) {
-            const imageFile = `/uploads/${data.file}`;
-            console.log(imageFile);
+            const imageFile = data.file;
             saveInfo(imageFile, setImage, "imageURL");
         } else {
             alert(data.message);
@@ -109,7 +108,6 @@ export function Character_Sheets() {
                 const nameResponse = data.results[0];
                 const newName = `${nameResponse.name.first} ${nameResponse.name.last}`;
                 setFullName(newName);
-                console.log(fullName);
                 saveInfo(newName, setFullName, "fullName");
             })
             .catch();

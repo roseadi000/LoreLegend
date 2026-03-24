@@ -4,6 +4,7 @@ const express = require('express');
 const uuid = require('uuid');
 const multer = require('multer');
 const DB = require('./database.js');
+const s3 = require('./s3.js');
 
 const app = express();
 
@@ -127,23 +128,16 @@ apiRouter.post('/character_sheets/save', verifyAuth, async (req, res) => {
 });
 //save image
 const upload = multer({
-    storage: multer.diskStorage({
-        destination: 'uploads/',
-        filename: (req, file, cb) => {
-            const filetype = file.originalname.split('.').pop();
-            const id = Math.round(Math.random() * 1e9);
-            const filename = `${id}.${filetype}`;
-            cb(null, filename);
-        },
-    }),
+    storage: multer.memoryStorage(),
     limits: { fileSize: 1000000 },
 });
 
-apiRouter.post('/upload', upload.single('file'), (req, res) => {
+apiRouter.post('/upload', upload.single('file'), async (req, res) => {
     if (req.file) {
+        const imageURL = await s3.uploadToS3(req.file);
         res.send({
             message: 'Uploaded succeeded',
-            file: req.file.filename,
+            file: imageURL,
         });
 
     } else {
