@@ -63,6 +63,10 @@ async function updatePassword(user){
 async function addFriendRequest(user){
   await users.updateOne({ username: user.username }, { $set: { friendRequests: user.friendRequests } });
 }
+async function addFriend(user, newFriend){
+  await users.updateOne({ username: user.username }, { $set: { friends: user.friends } });
+  await users.updateOne({ username: newFriend.username }, { $set: { friends: newFriend.friends } });
+}
 
 module.exports = {
   getUser,
@@ -76,4 +80,5 @@ module.exports = {
   updateUsername,
   updatePassword,
   addFriendRequest,
+  addFriend,
 };

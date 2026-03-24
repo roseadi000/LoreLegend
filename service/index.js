@@ -209,6 +209,7 @@ apiRouter.post('/friends/add', verifyAuth, async (req, res) => {
     if (newFriend) {
         user.friends.push(newFriend.username);
         newFriend.friends.push(user.username);
+        await DB.addFriend(user, newFriend);
     }
     else {
         user.friends.push(req.body.request.from);
@@ -222,7 +223,7 @@ apiRouter.delete('/friendRequests/:username/:requestID', verifyAuth, async(req, 
     const requestID = req.params.requestID;
     const updateRequests = user.friendRequests.filter((r) => r.id !== requestID); 
     user.friendRequests = updateRequests;
-
+    DB.addFriendRequest(user);
     res.send(user.friendRequests);
 })
 //save friend request

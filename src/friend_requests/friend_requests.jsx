@@ -2,7 +2,6 @@ import React from 'react';
 import './friend_requests.css';
 import { BrowserRouter, NavLink, useNavigate, Routes } from 'react-router-dom';
 import { Projects } from '../projects/projects';
-import { addFriend, removeRequest } from '../service';
 
 export function Friend_Requests() {
     const navigate = useNavigate();
@@ -35,7 +34,7 @@ export function Friend_Requests() {
         if (response?.status === 200) {
             console.log("Added");
         } else {
-            throw new Error('Failed to create project');
+            throw new Error('Failed to add friend');
         }
         const response2 = await fetch(`/api/friendRequests/${currentUser}/${request.id}`, {
             method: 'delete',
