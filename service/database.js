@@ -28,6 +28,9 @@ function getUser(field, value){
 async function updateToken(user){
   await users.updateOne({ email: user.email }, {$set: {token: user.token}})
 }
+async function deleteToken(user){
+  await users.updateOne({ username: user.username }, { $unset: { token: 1 } })
+}
 
 //Projects
 
@@ -36,4 +39,5 @@ module.exports = {
   getUser,
   addUser,
   updateToken,
+  deleteToken,
 };
