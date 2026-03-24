@@ -3,7 +3,7 @@ const config = require('./dbConfig.json');
 
 const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
 const client = new MongoClient(url);
-const db = client.db('loreLegend');
+const db = client.db('LoreLegend');
 const users = db.collection('users');
 
 // This will asynchronously test the connection and exit the process if it fails
@@ -18,6 +18,15 @@ const users = db.collection('users');
   }
 })();
 
+//Login
 async function addUser(user){
   await users.insertOne(user);
 }
+function getUser(field, value){
+  return users.findOne({[field]: value});
+}
+
+module.exports = {
+  getUser,
+  addUser,
+};

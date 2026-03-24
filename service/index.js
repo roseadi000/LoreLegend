@@ -250,7 +250,7 @@ async function registerUser(email, password, username) {
         token: uuid.v4(),
     };
 
-    await DB.addUser(user);
+    await DB.addUser(newUser);
     //users.push(newUser);
     return newUser;
 }
@@ -267,7 +267,8 @@ function setAuthCookie(res, authToken) {
 async function findUser(field, value) {
     if (!value) return null;
 
-    return users.find((u) => u[field] === value);
+    return DB.getUser(field, value);
+    //users.find((u) => u[field] === value);
 }
 
 //Project functions
