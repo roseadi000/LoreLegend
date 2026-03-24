@@ -151,6 +151,7 @@ apiRouter.put('/users/username', verifyAuth, async (req, res) => {
     const user = await findUser('username', req.body.username);
     user.username = req.body.value;
     console.log(user);
+    await DB.updateUsername(user);
     res.send(user);
 });
 //get user
