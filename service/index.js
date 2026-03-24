@@ -198,6 +198,7 @@ apiRouter.post('/friends/send', verifyAuth, async (req, res) => {
     const toUser = await findUser('username', req.body.to);
     const request = await manageFriendRequest(toUser, user);
     toUser.friendRequests.push(request);
+    DB.addFriendRequest(toUser);
     res.send(toUser.friendsRequests);
 });
 //add friend

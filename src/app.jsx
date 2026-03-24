@@ -9,13 +9,12 @@ import { Character_Sheets } from './character_sheets/character_sheets';
 import { Friends } from './friends/friends';
 import { Account } from './account/account';
 import { Friend_Requests } from './friend_requests/friend_requests';
-import { getRandomName, saveFriendRequests } from './service';
 
 export default function App() {
     const [user, setUser] = React.useState(null);
     const [currentUser, setCurrentUser] = React.useState((localStorage.getItem('currentUser') || null));
 
-    React.useEffect(() => {
+    /*React.useEffect(() => {
         let count = 0;
         const maxRequests = Math.floor(Math.random() * 5) + 1;
 
@@ -56,7 +55,7 @@ export default function App() {
         } else {
             throw new Error('Failed to create request');
         }
-    }
+    }*/
 
     return (
         <BrowserRouter>
