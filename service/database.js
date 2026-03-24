@@ -48,6 +48,11 @@ async function updateCharacter(user, project, character, item, value){
     { arrayFilters: [{ 'p.name': project }, { 'c.name': character }]});
 }
 
+//Account
+async function updateEmail(user){
+  await users.updateOne({ username: user.username }, {$set: {email: user.email}});
+}
+
 module.exports = {
   getUser,
   addUser,
@@ -56,4 +61,5 @@ module.exports = {
   addProject,
   addCharacter,
   updateCharacter,
+  updateEmail,
 };

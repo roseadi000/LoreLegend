@@ -162,7 +162,7 @@ apiRouter.get('/users/:username', verifyAuth, async (req, res) => {
 apiRouter.put('/users/email', verifyAuth, async (req, res) => {
     const user = await findUser('username', req.body.username);
     user.email = req.body.value;
-    console.log(user);
+    await DB.updateEmail(user);
     res.send(user);
 });
 //change password
