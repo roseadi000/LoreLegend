@@ -42,6 +42,12 @@ async function addCharacter(user, project, character){
   await users.updateOne( {username: user.username, 'projects.name': project}, { $push: { 'projects.$.characters': character } });
 }
 
+//Character Sheets
+async function updateCharacter(user, project, character, item, value){
+  await users.updateOne({ username: user }, {$set: { [`projects.$[p].characters.$[c].${item}`]: value }}, 
+    { arrayFilters: [{ 'p.name': project }, { 'c.name': character }]});
+}
+
 module.exports = {
   getUser,
   addUser,
@@ -49,4 +55,5 @@ module.exports = {
   deleteToken,
   addProject,
   addCharacter,
+  updateCharacter,
 };

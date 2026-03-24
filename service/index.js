@@ -115,7 +115,6 @@ apiRouter.post('/characters/create', verifyAuth, async (req, res) => {
 //get character infomation
 apiRouter.get('/character_sheets/:username/:project/:character', verifyAuth, async (req, res) => {
     const character = await findCharacter(req.params.character, req.params.project, req.params.username);
-    console.log(character);
     res.send(character);
 });
 //save info
@@ -123,6 +122,7 @@ apiRouter.post('/character_sheets/save', verifyAuth, async (req, res) => {
     const character = await findCharacter(req.body.character, req.body.project, req.body.username);
     const item = req.body.item;
     character[item] = req.body.value;
+    DB.updateCharacter(req.body.username, req.body.project, character.name, item, req.body.value);
     res.send(character);
 });
 //save image
