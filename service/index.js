@@ -170,9 +170,9 @@ apiRouter.put('/users/email', verifyAuth, async (req, res) => {
 apiRouter.put('/users/password', verifyAuth, async (req, res) => {
     const user = await findUser('username', req.body.username);
     if (await bcrypt.compare(req.body.password, user.password)) {
-        const newPassword = await bcrypt.hash(req.body.password, 10);
+        const newPassword = await bcrypt.hash(req.body.newPassword, 10);
         user.password = newPassword;
-        console.log(user);
+        await DB.updatePassword(user);
         res.send(user);
         return;
     }

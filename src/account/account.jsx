@@ -37,7 +37,7 @@ export function Account({ setUser, setCurrentUser }) {
   async function updateInfo(text, endpoint, closePopup, item) {
     const response = await fetch(endpoint, {
       method: 'put',
-      body: JSON.stringify({ value: text, username: currentUser, password: password }),
+      body: JSON.stringify({ value: text, username: currentUser, password: password, newPassword: newPassword }),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
       },
