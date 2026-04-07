@@ -342,7 +342,6 @@ async function manageFriendRequest(name, user) {
 async function createFriend(name) {
     const friend = {
         username: name,
-        status: 'offline',
     }
 
     return friend;

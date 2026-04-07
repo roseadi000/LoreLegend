@@ -7,10 +7,13 @@ async function userOnline(username, onlineUsers) {
         const friendSocket = onlineUsers.get(friend.username);
         if (friendSocket){
             friendSocket.send(JSON.stringify({
-                name: username,
-                status: 'Online',
+                type: 'friendOnline',
+                friend: user.username,
             }));
         }
+        console.log("Notifying friend:", friend.username);
+console.log("Socket exists:", onlineUsers.has(friend.username));
+
     })
 }
 

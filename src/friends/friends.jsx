@@ -3,23 +3,18 @@ import './friends.css';
 import { BrowserRouter, NavLink, useNavigate, Routes } from 'react-router-dom';
 import { Projects } from '../projects/projects';
 import { Popup } from '../scripts';
-import { checkSearch, manageRequest } from '../service';
 
-export function Friends() {
+export function Friends({ friends }) {
     const navigate = useNavigate();
 
     const [status, setStatus] = React.useState('Offline');
     const currentUser = localStorage.getItem('currentUser');
-    /*const users = JSON.parse(localStorage.getItem('users'));
-    const user = users.find((u) => u.username === currentUser.username);
-    const friends = user.friends;*/
 
     const [isPopupOpenSearch, setPopupOpenSearch] = React.useState(false);
     const [searchName, setSearchName] = React.useState('');
     const [isPopupOpenResult, setPopupOpenResult] = React.useState(false);
-    const [friends, setFriends] = React.useState([]);
 
-    React.useEffect(() => {
+    /*React.useEffect(() => {
         fetch(`/api/friends/${currentUser}`)
             .then(async (response) => {
                 if (response?.status === 200) {
@@ -30,10 +25,10 @@ export function Friends() {
                     navigate('/');
                 }
             })
-    }, []);
+    }, []);*/
 
 
-    React.useEffect(() => {
+    /*React.useEffect(() => {
         const interval = setInterval(() => {
             if (status === 'Online') {
                 setStatus('Offline');
@@ -44,7 +39,7 @@ export function Friends() {
 
         }, Math.floor(Math.random() * 60000));
         return () => clearInterval(interval);
-    }, []);
+    }, []);*/
 
     async function search(name) {
         fetch(`/api/users/${name}`)
@@ -66,7 +61,7 @@ export function Friends() {
                 'Content-type': 'application/json; charset=UTF-8',
             },
         });
-        if (response?.status === 200) {
+        /*if (response?.status === 200) {
             console.log(friends);
             fetch(`/api/friends/${currentUser}`)
                 .then((response) => response.json())
@@ -76,7 +71,7 @@ export function Friends() {
         }
         else {
             throw new Error('Failed to generate friends');
-        }
+        }*/
 
     }
 
@@ -107,9 +102,9 @@ export function Friends() {
                 <div id="Status"><b>Status</b></div>
             </div>
             {friends.map(friend => (
-                <div key={friend} id='requestOrganizer'>
+                <div key={friend.username} id='requestOrganizer'>
                     <div id="Friends">{friend.username}</div>
-                    <div id="Status">{friend.status}</div>
+                    <div id="Status">{friend.status || 'Offline'}</div>
                 </div>
             ))}
         </main>

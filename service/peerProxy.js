@@ -12,7 +12,7 @@ function peerProxy(httpServer) {
 
     const params = new URLSearchParams(req.url.replace('/', ''));
     const currentUser = params.get('ws/?currentUser');
-
+    
     if (currentUser) {
       onlineUsers.set(currentUser, socket);
       stat.userOnline(currentUser, onlineUsers);

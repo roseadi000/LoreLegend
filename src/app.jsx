@@ -14,28 +14,62 @@ export default function App() {
     const [user, setUser] = React.useState(null);
     const [currentUser, setCurrentUser] = React.useState((localStorage.getItem('currentUser') || null));
     const ws = React.useRef(null);
+    const [friends, setFriends] = React.useState([]);
 
     React.useEffect(() => {
-        setCurrentUser(localStorage.getItem('currentUser') || null);
-        if (!currentUser) return;
+        const currUser = localStorage.getItem('currentUser');
+        setCurrentUser(currUser);
+        if (!currUser) return;
+
+        fetch(`/api/friends/${currUser}`)
+            .then(async (response) => {
+                if (response?.status === 200) {
+                    const friendRes = await response.json();
+                    setFriends(friendRes);
+                    console.log(friendRes);
+                }
+            })
 
         let port = window.location.port;
         const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-        ws.socket = new WebSocket(`${protocol}://${window.location.hostname}:${port}/ws/?currentUser=${currentUser}`);
+        ws.current = new WebSocket(`${protocol}://${window.location.hostname}:${port}/ws/?currentUser=${currentUser}`);
 
-        ws.socket.onopen = () => console.log("WS connected");
-    })
+        ws.current.onopen = () => console.log("WS connected");
+    }, []);
+
+    React.useEffect(() => {
+        if (!ws.current) return;
+        ws.current.onmessage = (event) => {
+            console.log('Received msg');
+            const msg = JSON.parse(event.data);
+
+            if (msg.type === 'friendOnline') {
+                console.log('Before: ', friends);
+                setFriends(prev =>
+                    prev.map(f =>
+                        f.username === msg.friend
+                            ? { ...f, status: "Online" }
+                            : f
+                    )
+                )
+                console.log("Friends state:", friends);
+
+            }
+        }
+        console.log(friends);
+    }, []);
+
 
     /*React.useEffect(() => {
         let count = 0;
         const maxRequests = Math.floor(Math.random() * 5) + 1;
-
+    
         const interval = setInterval(() => {
             if (count >= maxRequests) {
             clearInterval(interval);
             return;
             }
-
+    
             const recipient = (localStorage.getItem('currentUser') || null);
             if (recipient) {
             const friendRequest = {
@@ -44,16 +78,16 @@ export default function App() {
                 to: recipient,
                 time: new Date().toLocaleDateString(),
             };
-
+    
             getFriendRequest(friendRequest);
             count++;
         }
         }, 10000);
-
+    
         return () => clearInterval(interval);
-
+    
     }, []);
-
+    
     async function getFriendRequest(request) {
         const response = await fetch('/api/friends/save', {
             method: 'post',
@@ -79,10 +113,10 @@ export default function App() {
                 </header>
 
                 <Routes>
-                    <Route path='/' element={<Login setUser={setUser} setCurrentUser={setCurrentUser}/>} exact />
-                    <Route path='/friends' element={<Friends />} />
+                    <Route path='/' element={<Login setUser={setUser} setCurrentUser={setCurrentUser} />} exact />
+                    <Route path='/friends' element={<Friends friends={friends} />} />
                     <Route path='/friend_requests' element={<Friend_Requests />} />
-                    <Route path='/account' element={<Account setUser={setUser} setCurrentUser={setCurrentUser}/>} />
+                    <Route path='/account' element={<Account setUser={setUser} setCurrentUser={setCurrentUser} />} />
                     <Route path='/projects' element={<Projects />} />
                     <Route path='/projects/:projectName' element={<Characters />} />
                     <Route path='/projects/:projectName/:characterName' element={<Character_Sheets />} />
