@@ -13,6 +13,18 @@ import { Friend_Requests } from './friend_requests/friend_requests';
 export default function App() {
     const [user, setUser] = React.useState(null);
     const [currentUser, setCurrentUser] = React.useState((localStorage.getItem('currentUser') || null));
+    const ws = React.useRef(null);
+
+    React.useEffect(() => {
+        setCurrentUser(localStorage.getItem('currentUser') || null);
+        if (!currentUser) return;
+
+        let port = window.location.port;
+        const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+        ws.socket = new WebSocket(`${protocol}://${window.location.hostname}:${port}/ws?currentUser=${currentUser}`);
+
+        ws.socket.onopen = () => console.log("WS connected");
+    })
 
     /*React.useEffect(() => {
         let count = 0;
