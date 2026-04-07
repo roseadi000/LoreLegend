@@ -55,6 +55,16 @@ export default function App() {
                 console.log("Friends state:", friends);
 
             }
+            if (msg.type === 'friendOffline') {
+                setFriends(prev =>
+                    prev.map(f =>
+                        f.username === msg.friend
+                            ? { ...f, status: "Offline" }
+                            : f
+                    )
+                )
+
+            }
         }
         console.log(friends);
     }, []);
