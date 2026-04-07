@@ -21,7 +21,7 @@ export default function App() {
 
         let port = window.location.port;
         const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-        ws.socket = new WebSocket(`${protocol}://${window.location.hostname}:${port}/ws?currentUser=${currentUser}`);
+        ws.socket = new WebSocket(`${protocol}://${window.location.hostname}:${port}/ws/?currentUser=${currentUser}`);
 
         ws.socket.onopen = () => console.log("WS connected");
     })

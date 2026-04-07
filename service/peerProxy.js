@@ -10,7 +10,8 @@ function peerProxy(httpServer) {
     console.log('Socket Alive');
 
     const params = new URLSearchParams(req.url.replace('/', ''));
-    const currentUser = params.get('currentUser');
+    console.log(params);
+    const currentUser = params.get('ws/?currentUser');
 
     if (currentUser) {
       const onlineUser = {
@@ -19,9 +20,7 @@ function peerProxy(httpServer) {
       }
 
       onlineUsers.push(onlineUser);
-      console.log(onlineUsers);
     }
-    console.log('whomp whomp');
 
     // Respond to pong messages by marking the connection alive
     socket.on('pong', () => {
