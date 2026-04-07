@@ -5,6 +5,7 @@ const uuid = require('uuid');
 const multer = require('multer');
 const DB = require('./database.js');
 const s3 = require('./s3.js');
+const { peerProxy } = require('./peerProxy.js');
 
 const app = express();
 
@@ -207,8 +208,12 @@ apiRouter.post('/friends/add', verifyAuth, async (req, res) => {
     const newFriend = await findUser('username', req.body.request.from);
     
     if (newFriend) {
-        user.friends.push(newFriend.username);
-        newFriend.friends.push(user.username);
+        const newFriendObj = await createFriend(newFriend.username);
+        user.friends.push(newFriendObj);
+        console.log(user.friends);
+        
+        const userObj = await createFriend(user.username);
+        newFriend.friends.push(userObj);
         await DB.addFriend(user, newFriend);
     }
     else {
@@ -319,11 +324,6 @@ async function findCharacter(name, projectName, username) {
     return character;
 }
 
-
-app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
-});
-
 //Friends functions
 //create/send friend request
 async function manageFriendRequest(name, user) {
@@ -338,3 +338,18 @@ async function manageFriendRequest(name, user) {
 
     return friendRequest;
 }
+//create friend
+async function createFriend(name) {
+    const friend = {
+        username: name,
+        status: 'offline',
+    }
+
+    return friend;
+}
+
+const httpService = app.listen(port, () => {
+    console.log(`Listening on port ${port}`);
+});
+
+peerProxy(httpService);

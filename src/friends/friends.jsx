@@ -108,8 +108,8 @@ export function Friends() {
             </div>
             {friends.map(friend => (
                 <div key={friend} id='requestOrganizer'>
-                    <div id="Friends">{friend}</div>
-                    <div id="Status">{status}</div>
+                    <div id="Friends">{friend.username}</div>
+                    <div id="Status">{friend.status}</div>
                 </div>
             ))}
         </main>
