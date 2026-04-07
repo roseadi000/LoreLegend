@@ -1,25 +1,21 @@
 const { WebSocketServer, WebSocket, on } = require('ws');
+const stat = require('./status.js');
 
 function peerProxy(httpServer) {
   // Create a websocket object
   const socketServer = new WebSocketServer({ server: httpServer });
-  let onlineUsers = [];
+  const onlineUsers = new Map();
 
   socketServer.on('connection', (socket, req) => {
     socket.isAlive = true;
     console.log('Socket Alive');
 
     const params = new URLSearchParams(req.url.replace('/', ''));
-    console.log(params);
     const currentUser = params.get('ws/?currentUser');
 
     if (currentUser) {
-      const onlineUser = {
-        username: currentUser,
-        socket: socket,
-      }
-
-      onlineUsers.push(onlineUser);
+      onlineUsers.set(currentUser, socket);
+      stat.userOnline(currentUser, onlineUsers);
     }
 
     // Respond to pong messages by marking the connection alive
