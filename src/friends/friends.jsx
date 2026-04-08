@@ -9,12 +9,13 @@ export function Friends({ friends }) {
 
     const [status, setStatus] = React.useState('Offline');
     const currentUser = localStorage.getItem('currentUser');
+    const [friends, setFriends] = React.useState([]);
 
     const [isPopupOpenSearch, setPopupOpenSearch] = React.useState(false);
     const [searchName, setSearchName] = React.useState('');
     const [isPopupOpenResult, setPopupOpenResult] = React.useState(false);
 
-    /*React.useEffect(() => {
+    React.useEffect(() => {
         fetch(`/api/friends/${currentUser}`)
             .then(async (response) => {
                 if (response?.status === 200) {
@@ -25,7 +26,7 @@ export function Friends({ friends }) {
                     navigate('/');
                 }
             })
-    }, []);*/
+    }, []);
 
 
     /*React.useEffect(() => {
@@ -61,7 +62,7 @@ export function Friends({ friends }) {
                 'Content-type': 'application/json; charset=UTF-8',
             },
         });
-        /*if (response?.status === 200) {
+        if (response?.status === 200) {
             console.log(friends);
             fetch(`/api/friends/${currentUser}`)
                 .then((response) => response.json())
@@ -71,7 +72,7 @@ export function Friends({ friends }) {
         }
         else {
             throw new Error('Failed to generate friends');
-        }*/
+        }
 
     }
 

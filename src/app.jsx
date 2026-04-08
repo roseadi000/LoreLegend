@@ -14,9 +14,9 @@ export default function App() {
     const [user, setUser] = React.useState(null);
     const [currentUser, setCurrentUser] = React.useState((localStorage.getItem('currentUser') || null));
     const ws = React.useRef(null);
-    const [friends, setFriends] = React.useState([]);
 
-    React.useEffect(() => {
+    //old websocket
+    /*React.useEffect(() => {
         const currUser = localStorage.getItem('currentUser');
         setCurrentUser(currUser);
         if (!currUser) return;
@@ -67,7 +67,7 @@ export default function App() {
             }
         }
         console.log(friends);
-    }, []);
+    }, []);*/
 
 
     /*React.useEffect(() => {
