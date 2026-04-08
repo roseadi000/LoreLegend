@@ -1,10 +1,11 @@
+//const result = require('dotenv').config({ path: __dirname + '/.env' });
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const express = require('express');
 const uuid = require('uuid');
 const multer = require('multer');
 const DB = require('./database.js');
-const s3 = require('./s3.js');
+//const s3 = require('./s3.js');
 const { peerProxy } = require('./peerProxy.js');
 
 const app = express();

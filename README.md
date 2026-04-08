@@ -122,6 +122,6 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 - [x] **Backend listens for WebSocket connection** - Backend listens for a WebSocket connection.
 - [x] **Frontend makes WebSocket connection** - Frontend makes the connection.
-- [ ] **Data sent over WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **WebSocket data displayed** - I did not complete this part of the deliverable.
-- [ ] **Application is fully functional** - I did not complete this part of the deliverable.
+- [x] **Data sent over WebSocket connection** - WebSocket sends whether a user in online or not.
+- [x] **WebSocket data displayed** - Data is displayed in the Friends page.
+- [x] **Application is fully functional** - Application is fully functional.

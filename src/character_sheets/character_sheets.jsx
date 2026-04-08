@@ -133,7 +133,7 @@ export function Character_Sheets() {
                         <div id="imageBox">
                             <img src={image} alt="Image" width="200px"></img>
                         </div>
-                        <input type="file" accept=".image/*" onChange={convertImage} />
+                        <input type="file" accept=".image/*" />
                         <div id="nameBox">
                             <div id='nameTextBox'>{characterName}</div>
                         </div>
