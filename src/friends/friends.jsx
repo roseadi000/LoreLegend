@@ -4,7 +4,7 @@ import { BrowserRouter, NavLink, useNavigate, Routes } from 'react-router-dom';
 import { Projects } from '../projects/projects';
 import { Popup } from '../scripts';
 
-export function Friends({ friends }) {
+export function Friends({ onlineUsers }) {
     const navigate = useNavigate();
 
     const [status, setStatus] = React.useState('Offline');

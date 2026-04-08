@@ -4,8 +4,10 @@ import { BrowserRouter, NavLink, Route, Routes, useNavigate } from 'react-router
 import { Projects } from '../projects/projects';
 import { registerUser, checkLogin } from '../service.js';
 import { Popup } from '../scripts';
+import { onlineUser } from '../status.js';
 
-export function Login({ setUser, setCurrentUser }) {
+
+export function Login({ setUser, setCurrentUser, setOnlineUsers, onlineUsers }) {
   const [isPopupOpen, setPopupOpen] = React.useState(false);
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -14,7 +16,6 @@ export function Login({ setUser, setCurrentUser }) {
 
   async function register(event) {
     event.preventDefault();
-    //registerUser(email, password, username);
 
     const response = await fetch('/api/auth/create', {
       method: 'post',
@@ -26,6 +27,7 @@ export function Login({ setUser, setCurrentUser }) {
     if (response?.status === 200) {
       localStorage.setItem('currentUser', username);
       setCurrentUser(username);
+      setOnlineUsers(onlineUser(username, onlineUsers));
       navigate('/projects');
     } else {
       throw new Error('Failed to register user');
@@ -46,14 +48,13 @@ export function Login({ setUser, setCurrentUser }) {
       fetch(`/api/auth/${email}`)
         .then((response) => response.json())
         .then((user) => {
-          console.log(user)
           localStorage.setItem('currentUser', user.username);
           setUsername(user.username);
           setCurrentUser(user.username);
+          setOnlineUsers(onlineUser(username, onlineUsers));
       navigate('/projects');
 
         });
-      console.log(username);
     } else {
       alert("Incorrect Username or Password");
     }
