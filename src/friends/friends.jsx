@@ -46,25 +46,11 @@ export function Friends () {
     
         const interval = setInterval(() => {
             fetchOnlineUsers();
-        }, 15000);
+        }, 10000);
         return () => clearInterval(interval);
 
 
     }, []);
-
-
-    /*React.useEffect(() => {
-        const interval = setInterval(() => {
-            if (status === 'Online') {
-                setStatus('Offline');
-            }
-            else {
-                setStatus('Online');
-            }
-
-        }, Math.floor(Math.random() * 60000));
-        return () => clearInterval(interval);
-    }, []);*/
 
     async function search(name) {
         fetch(`/api/users/${name}`)
