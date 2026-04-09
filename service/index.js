@@ -241,6 +241,7 @@ apiRouter.post('/friends/save', verifyAuth, async (req, res) => {
 });
 //get online users
 apiRouter.get('/getOnlineUsers', verifyAuth, async (req, res) => {
+    console.log('u: ', onlineUsers);
     res.send(onlineUsers);
 })
 

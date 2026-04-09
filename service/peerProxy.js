@@ -13,10 +13,7 @@ function peerProxy(httpServer, onlineUsers) {
       if (msg.type === 'userOnline') {
         socket.username = msg.user;
       }
-      else if (msg.type === 'userOffline') {
-        onlineUsers = onlineUsers.filter((u) => u !== msg.user);
-        socket.isAlive = false;
-      }
+
       socketServer.clients.forEach((client) => {
         if (client !== socket && client.readyState === WebSocket.OPEN) {
           client.send(data);
@@ -30,7 +27,12 @@ function peerProxy(httpServer, onlineUsers) {
     });
 
     socket.on('close', () => {
-      onlineUsers = onlineUsers.filter((u) => u !== socket.user);
+      console.log(socket.username);
+      const index = onlineUsers.indexOf(socket.username);
+      if (index !== -1) {
+        onlineUsers.splice(index, 1);
+      }
+      console.log('close: ', onlineUsers);
     });
   });
 

@@ -10,9 +10,7 @@ export function onlineUser(user) {
         socket.send(JSON.stringify({ type: 'userOnline', user: user }));
 
     }
-    socket.onclose = (event) => {
-        socket.send(JSON.stringify({ type: 'userOffline', user: user }));
-    }
+    
     socket.onmessage = async (msg) => {
         try {
             const event = JSON.parse(await msg.data.text());
@@ -25,3 +23,23 @@ function handleEvent(event) {
     onlineUsers = event;
     console.log(onlineUsers);
 }
+
+/*let socket = null;
+
+export function onlineUser(user) {
+    let port = window.location.port;
+    const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+    socket = new WebSocket(`${protocol}://${window.location.hostname}:${port}/ws`);
+    console.log(user);
+    socket.onopen = (event) => {
+        socket.send(JSON.stringify({ type: 'userOnline', user: user }));
+
+    }
+}
+
+export function offlineUser() {
+    console.log(socket);
+    socket.close();
+}*/
+
+
