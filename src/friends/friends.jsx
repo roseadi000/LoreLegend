@@ -14,7 +14,7 @@ export function Friends () {
     const [isPopupOpenSearch, setPopupOpenSearch] = React.useState(false);
     const [searchName, setSearchName] = React.useState('');
     const [isPopupOpenResult, setPopupOpenResult] = React.useState(false);
-    let onlineUsers = [];
+    const [onlineUsers, setOnlineUsers] = React.useState([]);
 
     React.useEffect(() => {
         fetch(`/api/friends/${currentUser}`)
@@ -34,7 +34,9 @@ export function Friends () {
             .then(async (response) => {
                 if (response?.status === 200) {
                     const usersRes = await response.json();
-                    onlineUsers = usersRes;
+                    console.log(usersRes);
+                    setOnlineUsers(usersRes);
+                    console.log(onlineUsers);
                 }
             })
 
@@ -89,11 +91,14 @@ export function Friends () {
     }
 
     function getStatus(friend) {
+        console.log(onlineUsers);
         if (onlineUsers.includes(friend)) {
             return 'Online';
+            console.log('online');
         }
         else {
             return 'Offline';
+            console.log('offline');
         }
     }
 
