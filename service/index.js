@@ -239,6 +239,10 @@ apiRouter.post('/friends/save', verifyAuth, async (req, res) => {
     res.send(requests);
 }
 });
+//get online users
+apiRouter.post('friends/getUsers', verifyAuth, async (req, res) => {
+    return onlineUsers;
+})
 
 
 //Login functions
