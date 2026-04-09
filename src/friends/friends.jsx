@@ -4,7 +4,7 @@ import { BrowserRouter, NavLink, useNavigate, Routes } from 'react-router-dom';
 import { Projects } from '../projects/projects';
 import { Popup } from '../scripts';
 
-export function Friends({ onlineUsers }) {
+export function Friends () {
     const navigate = useNavigate();
 
     const [status, setStatus] = React.useState('Offline');
@@ -14,10 +14,9 @@ export function Friends({ onlineUsers }) {
     const [isPopupOpenSearch, setPopupOpenSearch] = React.useState(false);
     const [searchName, setSearchName] = React.useState('');
     const [isPopupOpenResult, setPopupOpenResult] = React.useState(false);
+    let onlineUsers = [];
 
     React.useEffect(() => {
-                  console.log('Users2: ', onlineUsers);
-
         fetch(`/api/friends/${currentUser}`)
             .then(async (response) => {
                 if (response?.status === 200) {
@@ -27,7 +26,18 @@ export function Friends({ onlineUsers }) {
                 else if (response?.status === 401) {
                     navigate('/');
                 }
+            });
+
+    }, []);
+    React.useEffect(() => {
+        fetch('/api/getOnlineUsers')
+            .then(async (response) => {
+                if (response?.status === 200) {
+                    const usersRes = await response.json();
+                    onlineUsers = usersRes;
+                }
             })
+
     }, []);
 
 
@@ -78,6 +88,15 @@ export function Friends({ onlineUsers }) {
 
     }
 
+    function getStatus(friend) {
+        if (onlineUsers.includes(friend)) {
+            return 'Online';
+        }
+        else {
+            return 'Offline';
+        }
+    }
+
     return (
         <main>
             <NavLink to='/projects' id="fileLink">Back to Projects</NavLink>
@@ -107,7 +126,7 @@ export function Friends({ onlineUsers }) {
             {friends.map(friend => (
                 <div key={friend.username} id='requestOrganizer'>
                     <div id="Friends">{friend.username}</div>
-                    <div id="Status">{friend.status || 'Offline'}</div>
+                    <div id="Status">{ getStatus(friend.username) }</div>
                 </div>
             ))}
         </main>

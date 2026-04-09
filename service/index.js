@@ -240,8 +240,8 @@ apiRouter.post('/friends/save', verifyAuth, async (req, res) => {
 }
 });
 //get online users
-apiRouter.post('friends/getUsers', verifyAuth, async (req, res) => {
-    return onlineUsers;
+apiRouter.get('/getOnlineUsers', verifyAuth, async (req, res) => {
+    res.send(onlineUsers);
 })
 
 
