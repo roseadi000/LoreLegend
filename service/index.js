@@ -12,7 +12,7 @@ const app = express();
 
 const authCookieName = 'token';
 
-let users = [];
+let onlineUsers = [];
 
 const port = process.argv.length > 2 ? process.argv[2] : 3000;
 
@@ -44,7 +44,6 @@ apiRouter.post('/auth/create', async (req, res) => {
 //login user
 apiRouter.post('/auth/login', async (req, res) => {
     const user = await findUser('email', req.body.email);
-    console.log(user);
     if (user) {
         if (await bcrypt.compare(req.body.password, user.password)) {
             user.token = uuid.v4();
@@ -152,7 +151,6 @@ apiRouter.post('/upload', upload.single('file'), async (req, res) => {
 apiRouter.put('/users/username', verifyAuth, async (req, res) => {
     const user = await findUser('username', req.body.username);
     user.username = req.body.value;
-    console.log(user);
     await DB.updateUsername(user);
     res.send(user);
 });
@@ -211,7 +209,6 @@ apiRouter.post('/friends/add', verifyAuth, async (req, res) => {
     if (newFriend) {
         const newFriendObj = await createFriend(newFriend.username);
         user.friends.push(newFriendObj);
-        console.log(user.friends);
         
         const userObj = await createFriend(user.username);
         newFriend.friends.push(userObj);
@@ -321,7 +318,6 @@ async function findCharacter(name, projectName, username) {
     const user = await findUser('username', username);
     const project = user.projects.find((p) => p.name === projectName);
     const character = project.characters.find((c) => c.name === name);
-    console.log(character);
     return character;
 }
 
@@ -352,4 +348,4 @@ const httpService = app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });
 
-peerProxy(httpService);
+peerProxy(httpService, onlineUsers);

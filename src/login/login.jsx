@@ -6,8 +6,7 @@ import { registerUser, checkLogin } from '../service.js';
 import { Popup } from '../scripts';
 import { onlineUser } from '../status.js';
 
-
-export function Login({ setUser, setCurrentUser, setOnlineUsers, onlineUsers }) {
+export function Login({ setUser, setCurrentUser }) {
   const [isPopupOpen, setPopupOpen] = React.useState(false);
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -27,7 +26,6 @@ export function Login({ setUser, setCurrentUser, setOnlineUsers, onlineUsers }) 
     if (response?.status === 200) {
       localStorage.setItem('currentUser', username);
       setCurrentUser(username);
-      setOnlineUsers(onlineUser(username, onlineUsers));
       navigate('/projects');
     } else {
       throw new Error('Failed to register user');
@@ -44,14 +42,13 @@ export function Login({ setUser, setCurrentUser, setOnlineUsers, onlineUsers }) 
       },
     });
     if (response?.status === 200) {
-      console.log(response);
       fetch(`/api/auth/${email}`)
         .then((response) => response.json())
         .then((user) => {
           localStorage.setItem('currentUser', user.username);
           setUsername(user.username);
           setCurrentUser(user.username);
-          setOnlineUsers(onlineUser(username, onlineUsers));
+          onlineUser(user.username);
       navigate('/projects');
 
         });

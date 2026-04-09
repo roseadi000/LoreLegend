@@ -16,6 +16,8 @@ export function Friends({ onlineUsers }) {
     const [isPopupOpenResult, setPopupOpenResult] = React.useState(false);
 
     React.useEffect(() => {
+                  console.log('Users2: ', onlineUsers);
+
         fetch(`/api/friends/${currentUser}`)
             .then(async (response) => {
                 if (response?.status === 200) {
