@@ -95,7 +95,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [x] **All functionality implemented or mocked out** - I implemented out login/logout/sign up, project created, character creation, and saving character data. I mocked out generating a random name (third-party API call) and generating friend requests (websocket). I also used local storage to store everything.
+- [x] **All functionality implemented or mocked out** - I implemented out login/logout/sign up, project created, character creation, and saving character data. I mocked out generating a random name (third-party API call) and generating friend requests (websocket). I also used local storage to store everything. **Saving images is no longer functional**
 - [x] **Hooks** - I used useState and useEffect hooks.
 
 ## 🚀 Service deliverable
@@ -122,6 +122,6 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 - [x] **Backend listens for WebSocket connection** - Backend listens for a WebSocket connection.
 - [x] **Frontend makes WebSocket connection** - Frontend makes the connection.
-- [x] **Data sent over WebSocket connection** - WebSocket sends whether a user in online or not.
+- [x] **Data sent over WebSocket connection** - WebSocket sends username and that their online.
 - [x] **WebSocket data displayed** - Data is displayed in the Friends page.
 - [x] **Application is fully functional** - Application is fully functional.
