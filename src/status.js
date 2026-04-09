@@ -1,31 +1,23 @@
+let userSocket = null;
+
 export function onlineUser(user) {
     let port = window.location.port;
     const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
     const socket = new WebSocket(`${protocol}://${window.location.hostname}:${port}/ws`);
-
-    let onlineUsers = [];
-    let events = [];
-
+    userSocket = socket;
     console.log(user);
     socket.onopen = (event) => {
-        socket.send(JSON.stringify({type: 'user', user: user}));
-        events.push('online');
-        onlineUsers.push(user);
-        console.log('WS connected');
-        socket.send(JSON.stringify(onlineUsers));
+        socket.send(JSON.stringify({ type: 'userOnline', user: user }));
 
     }
     socket.onclose = (event) => {
-        events.push('offline');
-        onlineUsers.filter((u) => u !== user);
-                socket.send(JSON.stringify(onlineUsers));
-
+        socket.send(JSON.stringify({ type: 'userOffline', user: user }));
     }
     socket.onmessage = async (msg) => {
-      try {
-        const event = JSON.parse(await msg.data.text());
-        handleEvent(event);
-      } catch {}
+        try {
+            const event = JSON.parse(await msg.data.text());
+            handleEvent(event);
+        } catch { }
     };
 }
 

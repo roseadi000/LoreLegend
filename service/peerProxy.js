@@ -10,8 +10,11 @@ function peerProxy(httpServer, onlineUsers) {
     // Forward messages to everyone except the sender
     socket.on('message', function message(data) {
       const msg = JSON.parse(data);
-      if (msg.type === 'user') {
+      if (msg.type === 'userOnline') {
         socket.username = msg.user;
+      }
+      else if (msg.type === 'userOffline') {
+        onlineUsers.filter((u) => u !== msg.user);
       }
       socketServer.clients.forEach((client) => {
         if (client !== socket && client.readyState === WebSocket.OPEN) {

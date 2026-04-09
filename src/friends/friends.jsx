@@ -30,6 +30,7 @@ export function Friends () {
 
     }, []);
     React.useEffect(() => {
+        function fetchOnlineUsers () {
         fetch('/api/getOnlineUsers')
             .then(async (response) => {
                 if (response?.status === 200) {
@@ -38,7 +39,16 @@ export function Friends () {
                     setOnlineUsers(usersRes);
                     console.log(onlineUsers);
                 }
-            })
+            });
+        }
+
+        fetchOnlineUsers();
+    
+        const interval = setInterval(() => {
+            fetchOnlineUsers();
+        }, 15000);
+        return () => clearInterval(interval);
+
 
     }, []);
 
