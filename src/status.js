@@ -1,4 +1,4 @@
-let userSocket = null;
+/*let userSocket = null;
 
 export function onlineUser(user) {
     let port = window.location.port;
@@ -22,9 +22,9 @@ export function onlineUser(user) {
 function handleEvent(event) {
     onlineUsers = event;
     console.log(onlineUsers);
-}
+}*/
 
-/*let socket = null;
+let socket = null;
 
 export function onlineUser(user) {
     let port = window.location.port;
@@ -40,6 +40,6 @@ export function onlineUser(user) {
 export function offlineUser() {
     console.log(socket);
     socket.close();
-}*/
+}
 
 

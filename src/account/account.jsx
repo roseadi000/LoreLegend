@@ -3,6 +3,7 @@ import './account.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { updateUsername, updateEmail, updatePassword } from '../service.js';
 import { Popup } from '../scripts.jsx';
+import { offlineUser } from '../status.js';
 
 export function Account({ setUser, setCurrentUser }) {
   //const users = JSON.parse(localStorage.getItem('users'));
@@ -72,6 +73,7 @@ export function Account({ setUser, setCurrentUser }) {
     localStorage.removeItem('currentUser');
     setUser(null);
     setCurrentUser(null);
+    offlineUser();
     navigate('/');
   }
 
