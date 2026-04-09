@@ -14,7 +14,8 @@ function peerProxy(httpServer, onlineUsers) {
         socket.username = msg.user;
       }
       else if (msg.type === 'userOffline') {
-        onlineUsers.filter((u) => u !== msg.user);
+        onlineUsers = onlineUsers.filter((u) => u !== msg.user);
+        socket.isAlive = false;
       }
       socketServer.clients.forEach((client) => {
         if (client !== socket && client.readyState === WebSocket.OPEN) {
@@ -27,12 +28,21 @@ function peerProxy(httpServer, onlineUsers) {
     socket.on('pong', () => {
       socket.isAlive = true;
     });
+
+    socket.on('close', () => {
+      onlineUsers = onlineUsers.filter((u) => u !== socket.user);
+    });
   });
 
   // Periodically send out a ping message to make sure clients are alive
   setInterval(() => {
     socketServer.clients.forEach(function each(client) {
-      if (client.isAlive === false) return client.terminate();
+      if (client.isAlive === false) {
+        onlineUsers = onlineUsers.filter((c) => c !== client.username);
+        client.terminate();
+        console.log('Die: ', onlineUsers);
+        return;
+      }
 
       client.isAlive = false;
       client.ping();
