@@ -27,12 +27,10 @@ function peerProxy(httpServer, onlineUsers) {
     });
 
     socket.on('close', () => {
-      console.log(socket.username);
       const index = onlineUsers.indexOf(socket.username);
       if (index !== -1) {
         onlineUsers.splice(index, 1);
       }
-      console.log('close: ', onlineUsers);
     });
   });
 
@@ -42,7 +40,6 @@ function peerProxy(httpServer, onlineUsers) {
       if (client.isAlive === false) {
         onlineUsers = onlineUsers.filter((c) => c !== client.username);
         client.terminate();
-        console.log('Die: ', onlineUsers);
         return;
       }
 
@@ -52,7 +49,6 @@ function peerProxy(httpServer, onlineUsers) {
         onlineUsers.push(client.username);
       }
     });
-    console.log(onlineUsers);
   }, 10000);
 }
 
