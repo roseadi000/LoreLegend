@@ -4,7 +4,6 @@ import { NavLink, useParams, useNavigate } from 'react-router-dom';
 import { Character_Sheets } from '../character_sheets/character_sheets';
 import { Projects } from '../projects/projects';
 import { Popup } from '../scripts';
-import { createCharacter } from '../service.js';
 
 export function Characters() {
   const navigate = useNavigate();

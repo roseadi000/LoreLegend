@@ -2,7 +2,6 @@ import React from 'react';
 import './login.css';
 import { BrowserRouter, NavLink, Route, Routes, useNavigate } from 'react-router-dom';
 import { Projects } from '../projects/projects';
-import { registerUser, checkLogin } from '../service.js';
 import { Popup } from '../scripts';
 import { onlineUser } from '../status.js';
 

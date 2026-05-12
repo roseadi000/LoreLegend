@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './character_sheets.css';
 import { NavLink, useParams, useNavigate } from 'react-router-dom';
 import { Characters } from '../characters/characters';
-import { saveFullName, saveAge, saveGender, saveHeight, saveBirthday, saveSpecies, savePersonality, saveStrengths, saveWeaknesses, getRandomName, saveImage } from '../service.js';
 import { Popup } from '../scripts.jsx';
 
 export function Character_Sheets() {

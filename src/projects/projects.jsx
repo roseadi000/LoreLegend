@@ -3,7 +3,6 @@ import './projects.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Characters } from '../characters/characters';
 import { Popup } from '../scripts';
-import { createProject } from '../service.js';
 
 export function Projects() {
     const navigate = useNavigate();
